@@ -1,0 +1,66 @@
+<html>
+<style>
+    body{
+        background-image: url(hat.jpeg);
+        background-size: cover;
+		background-repeat: no-repeat;
+    }
+</style>
+<body>
+    <button onclick="find()">Start</button>
+    <p id="demo">
+
+    </p>
+</body>    
+<script>
+    character = [
+    {
+        "name":"Harry Potter",
+        "house":"Gryffindor"
+    },
+    {
+        "name":"Draco Malfoy",
+        "house":"Slytherin"
+    },
+    {
+        "name" : "Luna Lovegood",
+        "house" : "Ravenclaw"
+    },
+    {
+        "name" : "Cedric Diggory",
+        "house" : "Hufflepuff"
+    }
+]
+    function find (){
+        var name = prompt("Enter your name","Lol");
+
+    //const apikey = '$2a$10$qmus06s8/xrTZNC9dikH4.UH5TB6S.RZ.//IrgjwxRJVyq6fLIdGG';
+    const url = new URL('https://www.potterapi.com/v1/sortinghat/');
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+       //document.getElementById("demo").innerHTML = this.responseText;
+       console.log(this.responseText);
+       charl = this.responseText;
+       var local = JSON.parse(charl);
+       var str = "Hii "+name+" you got "+local
+        
+        var i;
+        var senior;
+        for(i=0;i<4;i++)
+        {
+            if(character[i].house==local)
+            {
+                senior = character[i].name;
+            }
+        }
+        var str2 = "\n Your senior was "+senior;
+        document.getElementById("demo").innerHTML = str + str2;
+        }
+};
+        xhttp.open("GET",url, true);
+    xhttp.send();
+}
+</script>
+</html>
+
